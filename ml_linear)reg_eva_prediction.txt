@@ -1,0 +1,36 @@
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from matplotlib import pyplot as plt
+
+evaluation = pd.read_csv('C:\\Users\\alifs\\new_folder\\Evaluation_Data_Set_Sheet1.csv',  engine='python')
+df = pd.DataFrame(evaluation)
+
+print(df.columns)
+
+df.rename(columns={"Teacher's_Preference_Course": 'preference'}, inplace=True)
+print(df.columns)
+
+x = df[['Teacher_Student_Relationship ', 'preference', 'Pre_Sem_Course_rating_by_stu']]
+
+y = df[['Teaching_Evaluation']]
+print(y)
+
+lm = LinearRegression()
+
+model = lm.fit(x, y)
+
+test =df[['Teacher_Student_Relationship ','preference','Pre_Sem_Course_rating_by_stu']] 
+
+y_predict= lm.predict(test)
+
+print(y_predict)
+print(type(y_predict))
+
+print(list(y_predict))
+
+x = [1,2,3,4,5,6,7,8,9]
+
+plt.plot(x,list(y_predict), color='green', linestyle = '--', marker = 'o', label = 'temp' )
+plt.plot(x,df['Teaching_Evaluation'] ,linestyle =' ', color='blue', marker = 'o', label = 'temp' )
+plt.legend(["Predictions", "Evaluation"])
+plt.rcParams["figure.figsize"] = (10,8)
